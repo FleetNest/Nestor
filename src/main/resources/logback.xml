@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration debug="false" scan="true" scanPeriod="10 minutes">	
+	<!-- APPENDERS -->
+	<appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d : [%c{0}] %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="LogFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>./logs/nestor.log</file>
+		<encoder>
+			<pattern>%d : [%c{0}] [%t] : %m%n</pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>./logs/nestor.%i.log</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>50</maxIndex>
+		</rollingPolicy>
+	
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>10MB</maxFileSize>
+		</triggeringPolicy>
+
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+	</appender>
+
+	<!-- LOGGERS -->
+	<!-- 3RD PARTY API -->
+	<logger name="org.springframework" level="INFO" additivity="false">
+		<appender-ref ref="ConsoleAppender" />
+	</logger>
+	
+	<logger name="org.apache" level="ERROR" additivity="false">
+		<appender-ref ref="ConsoleAppender" />
+	</logger>
+	
+	<!-- APPLICATION LEVEL -->
+	<logger name="com.fleetnest.nestor" level="INFO" additivity="false">
+		<!--appender-ref ref="LogFileAppender" /-->
+		<appender-ref ref="ConsoleAppender" />
+ 	</logger>
+
+	<!--  uncomment this while doing development <root level="INFO" additivity="false"> -->
+	<root level="INFO" additivity="false">
+		<appender-ref ref="ConsoleAppender" />
+	</root>
+</configuration>
