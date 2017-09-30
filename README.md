@@ -1,4 +1,7 @@
+
 # Nestor #
+
+Fleetnest is an IoT Fleet Management Cloud platform which collects, analyzes and creates reports for operational cost, performance and safety monitoring of any kind of fleets.
 
 Nestor is part of the FleetNest IoT portal that is a simple guideline to connect the data collector
 
