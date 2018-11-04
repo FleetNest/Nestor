@@ -1,9 +1,8 @@
 package com.fleetnest.nestor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -17,8 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 
  * @author Cihad Baskoy
  */
-@Configuration
-@ComponentScan("com.fleetnest.nestor")
+@SpringBootApplication
 @PropertySource("classpath:nestor.properties")
 public class NestorConfig {
 

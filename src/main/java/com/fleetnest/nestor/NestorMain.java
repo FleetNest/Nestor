@@ -1,11 +1,14 @@
 package com.fleetnest.nestor;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import com.fleetnest.nestor.model.SensorData;
 import com.fleetnest.nestor.service.DataService;
 import com.fleetnest.nestor.service.RestClientService;
+
+import static org.springframework.boot.Banner.Mode.OFF;
+import static org.springframework.boot.WebApplicationType.NONE;
 
 /**
  * Main class for Nestor Sample application
@@ -13,10 +16,13 @@ import com.fleetnest.nestor.service.RestClientService;
  * @author Cihad Baskoy
  */
 public class NestorMain {
-
-	@SuppressWarnings("resource")
+	
 	public static void main(String[] args) throws Exception {
-		ApplicationContext context = new AnnotationConfigApplicationContext(NestorConfig.class);
+		
+		ConfigurableApplicationContext context = new SpringApplicationBuilder(NestorConfig.class)
+				.web(NONE)
+				.bannerMode(OFF)
+				.run();
 		
 		RestClientService restClientService = context.getBean(RestClientService.class);
 		DataService dataService = context.getBean(DataService.class);
