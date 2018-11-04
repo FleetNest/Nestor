@@ -3,26 +3,25 @@ package com.fleetnest.nestor.service;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.fleetnest.nestor.exception.FleetnestRestClientException;
+import com.fleetnest.nestor.handler.NestorRestErrorHandler.FleetnestRestClientException;
 import com.fleetnest.nestor.model.RestResponse;
 import com.fleetnest.nestor.model.SensorData;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Rest Client that sends the data to the FleetNest URI.
  * 
  * @author Cihad Baskoy
  */
+@Slf4j
 @Service
 public class RestClientService {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(RestClientService.class);
 
 	@Autowired
 	private Environment env;
@@ -34,14 +33,14 @@ public class RestClientService {
 		RestResponse restResponse = null;
 
 		try {
-			LOGGER.info("Sending data for uniqueId {}", sensorData.getUniqueId());
-			LOGGER.debug("Sending device data {}", sensorData);
+			log.info("Sending data for uniqueId {}", sensorData.getUniqueId());
+			log.debug("Sending device data {}", sensorData);
 			restResponse = restTemplate.postForObject(getUri(), sensorData, RestResponse.class);
 		} catch (FleetnestRestClientException ex) {
 			restResponse = ex.getRestResponse();
 		}
 
-		LOGGER.info("Response from server is : {}", restResponse);
+		log.info("Response from server is : {}", restResponse);
 		
 		return restResponse;
 	}
@@ -51,7 +50,7 @@ public class RestClientService {
 		try {
 			uri = new URI("http", null, env.getProperty("server.host"), env.getProperty("server.port", Integer.class), env.getProperty("device.data.path"), null, null);
 		} catch (URISyntaxException exc) {
-			LOGGER.warn("Cannot generate URI", exc);
+			log.warn("Cannot generate URI", exc);
 		}
 
 		return uri;

@@ -3,14 +3,16 @@ package com.fleetnest.nestor.handler;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResponseErrorHandler;
+import org.springframework.web.client.RestClientException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fleetnest.nestor.exception.FleetnestRestClientException;
 import com.fleetnest.nestor.model.RestResponse;
+
+import static org.springframework.http.HttpStatus.FOUND;
+import static org.springframework.http.HttpStatus.OK;
 
 /**
  * If an error type object received through json response, this object will handle the data and throw internal exception
@@ -34,6 +36,20 @@ public class NestorRestErrorHandler implements ResponseErrorHandler {
 	
 	@Override
 	public boolean hasError(ClientHttpResponse response) throws IOException {
-		return response.getStatusCode() != HttpStatus.OK && response.getStatusCode() != HttpStatus.FOUND;
+		return response.getStatusCode() != OK && response.getStatusCode() != FOUND;
+	}
+
+	public static class FleetnestRestClientException extends RestClientException {
+
+		private RestResponse restResponse;
+		
+		public FleetnestRestClientException(String msg, RestResponse restResponse) {
+			super(msg);
+			this.restResponse = restResponse;
+		}
+
+		public RestResponse getRestResponse() {
+			return restResponse;
+		}
 	}
 }

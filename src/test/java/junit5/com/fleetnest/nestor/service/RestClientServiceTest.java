@@ -6,16 +6,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
 import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
 
-import com.fleetnest.nestor.exception.FleetnestRestClientException;
 import com.fleetnest.nestor.generator.SensorDataGenerator;
 import com.fleetnest.nestor.generator.SensorDetailGenerator;
+import com.fleetnest.nestor.handler.NestorRestErrorHandler.FleetnestRestClientException;
 import com.fleetnest.nestor.model.RestResponse;
 import com.fleetnest.nestor.model.SensorData;
 import com.fleetnest.nestor.model.SensorDetail;
@@ -27,16 +27,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+import static org.mockito.quality.Strictness.LENIENT;
 
 import io.generators.core.Generator;
-import junit5.com.fleetnest.nestor.util.MockitoExtension;
 
 /**
  * @author Cihad Baskoy
  */
 @ExtendWith(MockitoExtension.class)
-@RunWith(JUnitPlatform.class)
 @DisplayName("Tests for the Rest Client Endpoint")
+@MockitoSettings(strictness=LENIENT)
 public class RestClientServiceTest {
 
 	@Mock

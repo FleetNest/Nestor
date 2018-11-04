@@ -27,18 +27,18 @@ public class SensorDetailGenerator implements Generator<SensorDetail> {
 	@Override
 	public SensorDetail next() {
 
-		return new SensorDetail.Builder()
-				.setEngineRunning(booleanGenerator.next())
-				.setCrash(booleanGenerator.next())
-				.setEmergency(booleanGenerator.next())
-				.setCreateDate(now())
-				.setSpeed(positiveInts(1, 121).next())
-				.setFuelConsumption(positiveInts(1, 7).next().doubleValue()/10)
-				.setDistance(positiveInts(1, 1001).next())
-				.setTime(positiveInts(1, 1001).next())
-				.setCoordinate(coordinateGenerator.next())
-				.setTemperature(18 + positiveInts(1, 40).next().doubleValue()/10)
-				.setHumidity(52 + positiveInts(1, 5).next())
+		return SensorDetail.builder()
+				.engineRunning(booleanGenerator.next())
+				.crash(booleanGenerator.next())
+				.emergency(booleanGenerator.next())
+				.createDate(now())
+				.speed(positiveInts(1, 121).next())
+				.fuelConsumption(positiveInts(1, 7).next().doubleValue()/10)
+				.distance(positiveInts(1, 1001).next())
+				.time(positiveInts(1, 1001).next())
+				.coordinate(coordinateGenerator.next())
+				.temperature(18 + positiveInts(1, 40).next().doubleValue()/10)
+				.humidity(52 + positiveInts(1, 5).next())
 				.build();
 	}
 }

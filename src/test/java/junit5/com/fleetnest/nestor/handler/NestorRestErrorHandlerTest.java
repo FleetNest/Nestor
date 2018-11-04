@@ -5,17 +5,16 @@ import java.io.InputStream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fleetnest.nestor.exception.FleetnestRestClientException;
 import com.fleetnest.nestor.generator.HttpStatusGenerator;
 import com.fleetnest.nestor.handler.NestorRestErrorHandler;
+import com.fleetnest.nestor.handler.NestorRestErrorHandler.FleetnestRestClientException;
 import com.fleetnest.nestor.model.RestResponse;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,13 +30,11 @@ import static org.springframework.http.HttpStatus.FOUND;
 import static org.springframework.http.HttpStatus.OK;
 
 import io.generators.core.Generator;
-import junit5.com.fleetnest.nestor.util.MockitoExtension;
 
 /**
  * @author Cihad Baskoy
  */
 @ExtendWith(MockitoExtension.class)
-@RunWith(JUnitPlatform.class)
 @DisplayName("Tests for the Error Handler for Rest Responses from FleetNest")
 public class NestorRestErrorHandlerTest {
 

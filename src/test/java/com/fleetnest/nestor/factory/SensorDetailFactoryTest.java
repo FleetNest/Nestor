@@ -53,7 +53,7 @@ public class SensorDetailFactoryTest {
 		// Then
 		assertNotNull(actual.getCreateDate());
 		assertNotNull(actual.getCoordinate());
-		if(actual.isEngineRunning()) {
+		if(actual.getEngineRunning()) {
 			assertThat(actual.getSpeed(), greaterThan(0));
 			assertThat(actual.getSpeed(), lessThan(120));
 			assertThat(actual.getFuelConsumption(), greaterThan(0.1d));

@@ -30,7 +30,7 @@ public class BasicSensorDetailFactoryTest {
 
 		// Then
 		assertNotNull(actual.getCreateDate());
-		if(actual.isEngineRunning()) {
+		if(actual.getEngineRunning()) {
 			assertThat(actual.getSpeed(), greaterThan(0));
 			assertThat(actual.getSpeed(), lessThan(120));
 		} else {

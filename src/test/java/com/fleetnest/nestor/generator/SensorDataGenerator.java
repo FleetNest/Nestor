@@ -1,6 +1,5 @@
 package com.fleetnest.nestor.generator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fleetnest.nestor.model.SensorData;
@@ -9,6 +8,8 @@ import com.fleetnest.nestor.model.SensorDetail;
 import static io.generators.core.Generators.alphabetic;
 import static io.generators.core.Generators.positiveInts;
 import static java.time.LocalDateTime.now;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Stream.generate;
 
 import io.generators.core.Generator;
 
@@ -32,15 +33,14 @@ public class SensorDataGenerator implements Generator<SensorData> {
 		int sensorDetailSize = positiveInts(1, 101).next();
 		String uniqueId = alphabetic(uniqueIdLength).next();
 
-		List<SensorDetail> sensors = new ArrayList<>(sensorDetailSize);
-		for(int i=0;i<sensorDetailSize;i++) {
-			sensors.add(sensorDetailGenerator.next());
-		}
+		List<SensorDetail> sensors = generate(sensorDetailGenerator::next)
+				.limit(sensorDetailSize)
+				.collect(toList());
 		
-		return new SensorData.Builder()
-				.setCreateDate(now())
-				.setUniqueId(uniqueId)
-				.setSensors(sensors)
+		return SensorData.builder()
+				.createDate(now())
+				.uniqueId(uniqueId)
+				.sensors(sensors)
 				.build();
 	}
 }

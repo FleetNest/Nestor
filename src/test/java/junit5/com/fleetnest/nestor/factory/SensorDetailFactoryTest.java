@@ -3,10 +3,9 @@ package junit5.com.fleetnest.nestor.factory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fleetnest.nestor.factory.CoordinateFactory;
 import com.fleetnest.nestor.factory.SensorDetailFactory;
@@ -25,13 +24,11 @@ import static org.junit.jupiter.api.Assumptions.assumingThat;
 import static org.mockito.Mockito.when;
 
 import io.generators.core.Generator;
-import junit5.com.fleetnest.nestor.util.MockitoExtension;
 
 /**
  * @author Cihad Baskoy
  */
 @ExtendWith(MockitoExtension.class)
-@RunWith(JUnitPlatform.class)
 @DisplayName("Tests for the Sensor Factory")
 public class SensorDetailFactoryTest {
 
@@ -56,20 +53,20 @@ public class SensorDetailFactoryTest {
 		assertNotNull(actual.getCreateDate());
 		assertNotNull(actual.getCoordinate());
 		
-		assumingThat(actual.isEngineRunning(), () -> {
+		assumingThat(actual.getEngineRunning(), () -> {
 			assertThat(actual.getSpeed(), is(greaterThan(0)));
 			assertThat(actual.getSpeed(), is(lessThan(120)));
-			assertThat(actual.getFuelConsumption(), is(greaterThanOrEqualTo(0.1d)));
-			assertThat(actual.getFuelConsumption(), is(lessThan(0.7d)));
+			assertThat(actual.getFuelConsumption().doubleValue(), is(greaterThanOrEqualTo(0.1d)));
+			assertThat(actual.getFuelConsumption().doubleValue(), is(lessThan(0.7d)));
 			assertThat(actual.getDistance(), is(greaterThanOrEqualTo(1)));
 			assertThat(actual.getDistance(), is(lessThan(1000)));
 			assertThat(actual.getTime(), is(greaterThanOrEqualTo(1)));
 			assertThat(actual.getTime(), is(lessThan(1000)));
 		});
 		
-		assumingThat(!actual.isEngineRunning(), () -> {
+		assumingThat(!actual.getEngineRunning(), () -> {
 			assertThat(actual.getSpeed(), is(equalTo(0)));
-			assertThat(actual.getFuelConsumption(), is(equalTo(0d)));
+			assertThat(actual.getFuelConsumption().doubleValue(), is(equalTo(0d)));
 			assertThat(actual.getDistance(), is(equalTo(0)));
 			assertThat(actual.getTime(), is(equalTo(0)));
 		});

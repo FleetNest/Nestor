@@ -12,8 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fleetnest.nestor.exception.FleetnestRestClientException;
 import com.fleetnest.nestor.generator.HttpStatusGenerator;
+import com.fleetnest.nestor.handler.NestorRestErrorHandler.FleetnestRestClientException;
 import com.fleetnest.nestor.model.RestResponse;
 
 import static org.hamcrest.CoreMatchers.is;

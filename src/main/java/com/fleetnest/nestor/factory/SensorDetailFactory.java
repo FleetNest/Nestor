@@ -35,18 +35,18 @@ public class SensorDetailFactory implements Generator<SensorDetail> {
 		int distance = isEngineRunning ? positiveInts(1, 1001).next() : 0;
 		double fuelConsumption = isEngineRunning ? positiveInts(1, 7).next().doubleValue()/10 : 0;
 
-		return new SensorDetail.Builder()
-				.setEngineRunning(isEngineRunning)
-				.setCrash(isCrash)
-				.setEmergency(isEmergency)
-				.setCreateDate(now())
-				.setSpeed(speed)
-				.setFuelConsumption(fuelConsumption)
-				.setDistance(distance)
-				.setTime(time)
-				.setCoordinate(coordinateFactory.next())
-				.setTemperature(temperature)
-				.setHumidity(humidity)
+		return SensorDetail.builder()
+				.engineRunning(isEngineRunning)
+				.crash(isCrash)
+				.emergency(isEmergency)
+				.createDate(now())
+				.speed(speed)
+				.fuelConsumption(fuelConsumption)
+				.distance(distance)
+				.time(time)
+				.coordinate(coordinateFactory.next())
+				.temperature(temperature)
+				.humidity(humidity)
 				.build();
 	}
 }

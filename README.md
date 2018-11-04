@@ -8,7 +8,7 @@ Nestor is part of the FleetNest IoT portal that is a simple guideline to connect
 ### What is this 'Nestor' application? ###
 
 * Nestor is small application that helps you to connect to the FleetNest IoT application for data collection.
-* Current version is the initial version, **v1.0.0**
+* Current version is the version, **v1.0.1**
 * For details, please visit [FleetNest](http://www.fleetnest.com)
 
 ### How Nestor is working? ###

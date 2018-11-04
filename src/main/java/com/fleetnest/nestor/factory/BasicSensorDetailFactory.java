@@ -23,10 +23,10 @@ public class BasicSensorDetailFactory implements Generator<SensorDetail> {
 		boolean isEngineRunning = positiveInts(1,101).next() > 5;
 		int speed = isEngineRunning ? positiveInts(1,121).next() : 0;
 
-		return new SensorDetail.Builder()
-				.setEngineRunning(isEngineRunning)
-				.setCreateDate(now())
-				.setSpeed(speed)
+		return SensorDetail.builder()
+				.engineRunning(isEngineRunning)
+				.createDate(now())
+				.speed(speed)
 				.build();
 	}
 }

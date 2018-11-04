@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 import com.fleetnest.nestor.model.SensorData;
 import com.fleetnest.nestor.model.SensorDetail;
 
+import static io.generators.core.Generators.positiveInts;
 import static java.time.LocalDateTime.now;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Stream.generate;
 
 import io.generators.core.Generator;
-import io.generators.core.Generators;
 
 /**
  * Data Service that generates single or multiple random data
@@ -36,25 +36,25 @@ public class DataService {
 	private Generator<SensorDetail> basicSensorDetailFactory;
 
 	public SensorData singleDetailsData() {
-		return new SensorData.Builder()
-				.setUniqueId(env.getProperty("device.data.uniqueId"))
-				.setCreateDate(now())
-				.setSensors(asList(sensorDetailFactory.next()))
+		return SensorData.builder()
+				.uniqueId(env.getProperty("device.data.uniqueId"))
+				.createDate(now())
+				.sensors(asList(sensorDetailFactory.next()))
 				.build();
 	}
 
 	public SensorData multipleDetailsData() {
 		
-		return new SensorData.Builder()
-				.setUniqueId(env.getProperty("device.data.uniqueId"))
-				.setCreateDate(now())
-				.setSensors(sensors())
+		return SensorData.builder()
+				.uniqueId(env.getProperty("device.data.uniqueId"))
+				.createDate(now())
+				.sensors(sensors())
 				.build();
 	}
 
 	private List<SensorDetail> sensors() {
 		
-		Integer sensorDetailSize = Generators.positiveInts(1, 300).next();
+		Integer sensorDetailSize = positiveInts(1, 300).next();
 
 		List<SensorDetail> sensors = new ArrayList<>(sensorDetailSize + 1);
 		sensors.add(sensorDetailFactory.next());

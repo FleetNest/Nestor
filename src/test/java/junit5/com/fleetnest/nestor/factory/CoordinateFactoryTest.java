@@ -3,9 +3,8 @@ package junit5.com.fleetnest.nestor.factory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.platform.runner.JUnitPlatform;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fleetnest.nestor.factory.CoordinateFactory;
 import com.fleetnest.nestor.model.Coordinate;
@@ -15,13 +14,10 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
 
-import junit5.com.fleetnest.nestor.util.MockitoExtension;
-
 /**
  * @author Cihad Baskoy
  */
 @ExtendWith(MockitoExtension.class)
-@RunWith(JUnitPlatform.class)
 @DisplayName("Tests for the Coordinate Factory")
 public class CoordinateFactoryTest {
 

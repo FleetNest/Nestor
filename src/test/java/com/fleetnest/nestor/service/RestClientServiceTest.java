@@ -11,9 +11,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
 
-import com.fleetnest.nestor.exception.FleetnestRestClientException;
 import com.fleetnest.nestor.generator.SensorDataGenerator;
 import com.fleetnest.nestor.generator.SensorDetailGenerator;
+import com.fleetnest.nestor.handler.NestorRestErrorHandler.FleetnestRestClientException;
 import com.fleetnest.nestor.model.RestResponse;
 import com.fleetnest.nestor.model.SensorData;
 import com.fleetnest.nestor.model.SensorDetail;
