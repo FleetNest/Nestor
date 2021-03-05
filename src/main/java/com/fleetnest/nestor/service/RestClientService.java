@@ -1,17 +1,15 @@
 package com.fleetnest.nestor.service;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fleetnest.nestor.handler.NestorRestErrorHandler.FleetnestRestClientException;
 import com.fleetnest.nestor.model.RestResponse;
 import com.fleetnest.nestor.model.SensorData;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -20,14 +18,17 @@ import lombok.extern.slf4j.Slf4j;
  * @author Cihad Baskoy
  */
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class RestClientService {
 
-	@Autowired
-	private Environment env;
-
-	@Autowired
-	private RestTemplate restTemplate;
+	private static final String DEFAULT_SCHEME = "http";
+	
+	@Value("${server.host}") private String host;
+	@Value("${server.port}") private int port;
+	@Value("${device.data.path}") private String path;
+	
+	private final RestTemplate restTemplate;
 	
 	public RestResponse sendData(SensorData sensorData) {
 		RestResponse restResponse = null;
@@ -45,14 +46,12 @@ public class RestClientService {
 		return restResponse;
 	}
 
-	private URI getUri() {
-		URI uri = null;
-		try {
-			uri = new URI("http", null, env.getProperty("server.host"), env.getProperty("server.port", Integer.class), env.getProperty("device.data.path"), null, null);
-		} catch (URISyntaxException exc) {
-			log.warn("Cannot generate URI", exc);
-		}
-
-		return uri;
+	private String getUri() {
+		return UriComponentsBuilder.newInstance()
+				.scheme(DEFAULT_SCHEME)
+				.host(host)
+				.port(port)
+				.path(path)
+				.toUriString();
 	}
 }

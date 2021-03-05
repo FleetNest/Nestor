@@ -19,6 +19,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
 import static org.mockito.Mockito.when;
@@ -55,7 +56,7 @@ public class SensorDetailFactoryTest {
 		
 		assumingThat(actual.getEngineRunning(), () -> {
 			assertThat(actual.getSpeed(), is(greaterThan(0)));
-			assertThat(actual.getSpeed(), is(lessThan(120)));
+			assertThat(actual.getSpeed(), is(lessThanOrEqualTo(120)));
 			assertThat(actual.getFuelConsumption().doubleValue(), is(greaterThanOrEqualTo(0.1d)));
 			assertThat(actual.getFuelConsumption().doubleValue(), is(lessThan(0.7d)));
 			assertThat(actual.getDistance(), is(greaterThanOrEqualTo(1)));

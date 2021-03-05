@@ -3,8 +3,7 @@ package com.fleetnest.nestor.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.fleetnest.nestor.model.SensorData;
@@ -17,27 +16,25 @@ import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Stream.generate;
 
 import io.generators.core.Generator;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Data Service that generates single or multiple random data
  * 
  * @author Cihad Baskoy
  */
+@RequiredArgsConstructor
 @Service
 public class DataService {
 
-	@Autowired
-	private Environment env;
+	@Value("${device.data.uniqueId}") private String uniqueId;
 	
-	@Autowired
-	private Generator<SensorDetail> sensorDetailFactory;
-
-	@Autowired
-	private Generator<SensorDetail> basicSensorDetailFactory;
+	private final Generator<SensorDetail> sensorDetailFactory;
+	private final Generator<SensorDetail> basicSensorDetailFactory;
 
 	public SensorData singleDetailsData() {
 		return SensorData.builder()
-				.uniqueId(env.getProperty("device.data.uniqueId"))
+				.uniqueId(uniqueId)
 				.createDate(now())
 				.sensors(asList(sensorDetailFactory.next()))
 				.build();
@@ -46,7 +43,7 @@ public class DataService {
 	public SensorData multipleDetailsData() {
 		
 		return SensorData.builder()
-				.uniqueId(env.getProperty("device.data.uniqueId"))
+				.uniqueId(uniqueId)
 				.createDate(now())
 				.sensors(sensors())
 				.build();

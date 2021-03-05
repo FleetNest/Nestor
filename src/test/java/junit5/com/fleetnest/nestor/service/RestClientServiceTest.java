@@ -1,7 +1,5 @@
 package junit5.com.fleetnest.nestor.service;
 
-import java.net.URI;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
-import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
 
 import com.fleetnest.nestor.generator.SensorDataGenerator;
@@ -24,10 +21,11 @@ import com.fleetnest.nestor.service.RestClientService;
 import static io.generators.core.Generators.alphabetic;
 import static io.generators.core.Generators.positiveInts;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.mockito.quality.Strictness.LENIENT;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 import io.generators.core.Generator;
 
@@ -39,14 +37,8 @@ import io.generators.core.Generator;
 @MockitoSettings(strictness=LENIENT)
 public class RestClientServiceTest {
 
-	@Mock
-	private Environment env;
-
-	@Mock
-	private RestTemplate restTemplate;
-	
-	@InjectMocks
-	private RestClientService service;
+	@Mock private RestTemplate restTemplate;
+	@InjectMocks private RestClientService service;
 	
 	private Generator<SensorData> sensorDataGenerator; 
 	
@@ -57,9 +49,9 @@ public class RestClientServiceTest {
 		Generator<SensorDetail> sensorDetailGenerator = new SensorDetailGenerator();
 		sensorDataGenerator = new SensorDataGenerator(sensorDetailGenerator);
 		
-		when(env.getProperty("server.host")).thenReturn("localhost");
-		when(env.getProperty("server.port", Integer.class)).thenReturn(positiveInts(1024, 9999).next());
-		when(env.getProperty("device.data.path")).thenReturn("/rest/data");
+		setField(service, "host", "localhost");
+		setField(service, "port", positiveInts(1024, 9999).next());
+		setField(service, "path", "/rest/data");
 	}
 
 	@Test
@@ -68,7 +60,7 @@ public class RestClientServiceTest {
 
 		// Given
 		SensorData sensorData = sensorDataGenerator.next();
-		when(restTemplate.postForObject(any(URI.class), eq(sensorData), eq(RestResponse.class))).thenReturn(restResponse);
+		when(restTemplate.postForObject(anyString(), eq(sensorData), eq(RestResponse.class))).thenReturn(restResponse);
 
 		// When
 		RestResponse actual = service.sendData(sensorData);
@@ -84,7 +76,7 @@ public class RestClientServiceTest {
 		// Given
 		SensorData sensorData = sensorDataGenerator.next();
 		FleetnestRestClientException exc = new FleetnestRestClientException(alphabetic(256).next(), restResponse);
-		when(restTemplate.postForObject(any(URI.class), eq(sensorData), eq(RestResponse.class))).thenThrow(exc);
+		when(restTemplate.postForObject(anyString(), eq(sensorData), eq(RestResponse.class))).thenThrow(exc);
 		
 		// When
 		RestResponse actual = service.sendData(sensorData);

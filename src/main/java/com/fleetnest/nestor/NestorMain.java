@@ -1,5 +1,6 @@
 package com.fleetnest.nestor;
 
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -15,11 +16,12 @@ import static org.springframework.boot.WebApplicationType.NONE;
  * 
  * @author Cihad Baskoy
  */
+@SpringBootApplication
 public class NestorMain {
 	
 	public static void main(String[] args) throws Exception {
 		
-		ConfigurableApplicationContext context = new SpringApplicationBuilder(NestorConfig.class)
+		ConfigurableApplicationContext context = new SpringApplicationBuilder(NestorMain.class)
 				.web(NONE)
 				.bannerMode(OFF)
 				.run();

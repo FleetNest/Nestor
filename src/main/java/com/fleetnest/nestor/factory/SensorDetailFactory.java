@@ -1,6 +1,5 @@
 package com.fleetnest.nestor.factory;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fleetnest.nestor.model.Coordinate;
@@ -10,6 +9,7 @@ import static io.generators.core.Generators.positiveInts;
 import static java.time.LocalDateTime.now;
 
 import io.generators.core.Generator;
+import lombok.RequiredArgsConstructor;
 
 /**
  * This class generates a single sensor detail object
@@ -17,10 +17,10 @@ import io.generators.core.Generator;
  * @author Cihad Baskoy
  */
 @Service
+@RequiredArgsConstructor
 public class SensorDetailFactory implements Generator<SensorDetail> {
 
-	@Autowired
-	private Generator<Coordinate> coordinateFactory;
+	private final Generator<Coordinate> coordinateFactory;
 	
 	@Override
 	public SensorDetail next() {

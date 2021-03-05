@@ -7,9 +7,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.fleetnest.nestor.model.Coordinate;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
-import static org.junit.Assert.assertThat;
 
 /**
  * @author Cihad Baskoy

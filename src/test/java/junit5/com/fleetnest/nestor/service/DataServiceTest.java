@@ -8,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
-import org.springframework.core.env.Environment;
 
 import com.fleetnest.nestor.generator.SensorDetailGenerator;
 import com.fleetnest.nestor.model.SensorData;
@@ -23,6 +22,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.quality.Strictness.LENIENT;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 import io.generators.core.Generator;
 
@@ -34,14 +34,8 @@ import io.generators.core.Generator;
 @MockitoSettings(strictness=LENIENT)
 public class DataServiceTest {
 
-	@Mock
-	private Environment env;
-	
-	@Mock
-	private Generator<SensorDetail> sensorDetailFactory;
-
-	@Mock
-	private Generator<SensorDetail> basicSensorDetailFactory;
+	@Mock private Generator<SensorDetail> sensorDetailFactory;
+	@Mock private Generator<SensorDetail> basicSensorDetailFactory;
 
 	@InjectMocks
 	private DataService service;
@@ -58,7 +52,7 @@ public class DataServiceTest {
 		uniqueId = alphabetic(16).next();
 
 		// Mocks
-		when(env.getProperty("device.data.uniqueId")).thenReturn(uniqueId);
+		setField(service, "uniqueId", uniqueId);
 		when(sensorDetailFactory.next()).thenReturn(sensorDetailGenerator.next());
 		when(basicSensorDetailFactory.next()).thenReturn(sensorDetailGenerator.next());
 	}

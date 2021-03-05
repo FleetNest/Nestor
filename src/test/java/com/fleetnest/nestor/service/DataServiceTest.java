@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.core.env.Environment;
 
 import com.fleetnest.nestor.generator.SensorDetailGenerator;
 import com.fleetnest.nestor.model.SensorData;
@@ -14,33 +13,27 @@ import com.fleetnest.nestor.model.SensorDetail;
 
 import static io.generators.core.Generators.alphabetic;
 import static java.time.LocalDateTime.now;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 import io.generators.core.Generator;
 
 /**
  * @author Cihad Baskoy
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class DataServiceTest {
-
-	@Mock
-	private Environment env;
 	
-	@Mock
-	private Generator<SensorDetail> sensorDetailFactory;
+	@Mock private Generator<SensorDetail> sensorDetailFactory;
+	@Mock private Generator<SensorDetail> basicSensorDetailFactory;
 
-	@Mock
-	private Generator<SensorDetail> basicSensorDetailFactory;
-
-	@InjectMocks
-	private DataService service;
+	@InjectMocks private DataService service;
 	
 	private Generator<SensorDetail> sensorDetailGenerator;
 
@@ -56,7 +49,7 @@ public class DataServiceTest {
 		uniqueId = alphabetic(16).next();
 
 		// Mocks
-		when(env.getProperty("device.data.uniqueId")).thenReturn(uniqueId);
+		setField(service, "uniqueId", uniqueId);
 		when(sensorDetailFactory.next()).thenReturn(sensorDetailGenerator.next());
 		when(basicSensorDetailFactory.next()).thenReturn(sensorDetailGenerator.next());
 	}

@@ -14,7 +14,7 @@ Nestor is part of the FleetNest IoT portal that is a simple guideline to connect
 ### How Nestor is working? ###
 
 * Currently the data is generated through io.generators API. Factories are created for simple data generation.
-* Check the _nestor.properties_ under resources folder. _device.data.uniqueId_ must a unique id for your device and it must be configured in the FleetNest application. Default value **34:TR:120** is a sample. The _server.host_ and _server.port_ values are default values.
+* Check the _nestor.properties_ under resources folder. _device.data.uniqueId_ must a unique id for your device and it must be configured in the FleetNest application. Default value **34:TR:120** is a sample. The  _server.host_  and  _server.port_  values are default values.
 * All the dependencies are defined in the pom.xml. It uses common libraries as Spring and Apache commons.
 * Unit test are implemented both in JUnit4 and JUnit5 syntax. We are trying to use the latest technologies.
 
